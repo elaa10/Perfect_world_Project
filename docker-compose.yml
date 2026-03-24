@@ -1,0 +1,51 @@
+version: '3.8'
+
+services:
+  # Cerința: Run 2 web servers as replicas
+  web_app:
+    build:
+      context: ./Perfect_world
+      dockerfile: Dockerfile
+    deploy:
+      replicas: 2
+    networks:
+      - nsa_net
+
+  # Cerința: Install nginx as reverse proxy on port 8080
+  nginx:
+    image: nginx:latest
+    ports:
+      - "8080:8080"
+    volumes:
+      - ./nginx.conf:/etc/nginx/nginx.conf:ro
+    depends_on:
+      - web_app
+    networks:
+      - nsa_net
+
+  # Cerința: One database server
+  db:
+    image: mariadb:10.6
+    environment:
+      MYSQL_ROOT_PASSWORD: 100504
+      MYSQL_DATABASE: perfect_world_db
+      MYSQL_USER: alexandra
+      MYSQL_PASSWORD: 1005
+    networks:
+      - nsa_net
+
+  # Cerința: One phpmyadmin container
+  phpmyadmin:
+    image: phpmyadmin/phpmyadmin
+    ports:
+      - "8081:80"
+    environment:
+      PMA_HOST: db
+    depends_on:
+      - db
+    networks:
+      - nsa_net
+
+networks:
+  nsa_net:
+    driver: bridge
