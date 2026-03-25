@@ -15,11 +15,12 @@ if ($conn->connect_error) {
 
 // 1. Logica pentru INREGISTRARE (Register)
 if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['register_submit'])) {
-    $nume = $_POST['nume'] . ' ' . $_POST['prenume'];
+    $nume = $_POST['nume'];
+    $prenume = $_POST['prenume'];
     $email = $_POST['email_reg'];
     $parola = password_hash($_POST['parola_reg'], PASSWORD_DEFAULT);
 
-    $sql = "INSERT INTO users (name, email, password) VALUES ('$nume', '$email', '$parola')";
+    $sql = "INSERT INTO users (nume, prenume, email, password) VALUES ('$nume', '$prenume', '$email', '$parola')";
     if ($conn->query($sql) === TRUE) {
         echo "<script>alert('Cont creat cu succes! Te poți loga acum.');</script>";
     } else {
@@ -35,10 +36,12 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['login_submit'])) {
     $result = $conn->query("SELECT * FROM users WHERE email='$email'");
     if ($result->num_rows > 0) {
         $row = $result->fetch_assoc();
-        // Verificăm dacă parola introdusă se potrivește cu cea criptată din DB
+        // Verificăm parola
         if (password_verify($parola_introdusa, $row['password'])) {
-            $_SESSION['user_nume'] = $row['name'];
-            echo "<script>alert('Te-ai logat cu succes, " . $row['name'] . "!');</script>";
+            $_SESSION['user_id'] = $row['id'];
+            $_SESSION['user_nume'] = $row['nume'];
+            $_SESSION['user_prenume'] = $row['prenume'];
+            echo "<script>alert('Te-ai logat cu succes, " . $row['prenume'] . "!');</script>";
         } else {
             echo "<script>alert('Parola este incorectă!');</script>";
         }
