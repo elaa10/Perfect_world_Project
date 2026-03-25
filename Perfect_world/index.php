@@ -128,11 +128,10 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['login_submit'])) {
 					</li>
 					<li><a href="about.html">Despre noi</a></li>
 					<li><a href="contact.html">Contact</a></li>
-					<li>
+                    <li>
                         <?php if(isset($_SESSION['user_prenume'])): ?>
-                            <button class='loginbtn' style="width:auto; cursor:default;">Salut, <?= htmlspecialchars($_SESSION['user_prenume']) ?>!</button>
-                            <a href="logout.php" style="text-decoration: none;">
-                                <button class='loginbtn' style="width:auto; background:#dc3545; margin-left: 10px;">Ieșire</button>
+                            <a href="profil.php" style="text-decoration: none;">
+                                <button class='loginbtn' style="width:auto; cursor:pointer;">Salut, <?= htmlspecialchars($_SESSION['user_prenume']) ?>!</button>
                             </a>
                         <?php else: ?>
                             <button class='loginbtn' onclick="document.getElementById('login-form').style.display='block'" style="width:auto;">Contul meu</button>
@@ -149,27 +148,24 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['login_submit'])) {
                       <div class="form-box">
                           <div class='button-box'>
                               <div id='btn'></div>
-                              <button type='button'onclick='login()'class='toggle-btn'>Log in</button>
-                              <button type='button'onclick='register()'class='toggle-btn'>Cont nou</button>
+                              <button type='button' onclick='login()' class='toggle-btn' id='btn-log-text' style='color: #fff;'>Log in</button>
+                              <button type='button' onclick='register()' class='toggle-btn' id='btn-reg-text' style='color: #000;'>Cont nou</button>
                           </div>
 
                           <form id='login' class='input-group-login' method='POST' action='index.php'>
-                              <input type='email' name='email_log' class='input-field' placeholder='Email' required >
-          		            <input type='password' name='parola_log' class='input-field' placeholder='Introdu parola' required>
-          		            <input type='checkbox' class='check-box'><span>Memorează parola</span>
-          		            <button type='submit' name='login_submit' class='submit-btn'>Intră în cont</button>
-          		        </form>
+                              <input type='email' name='email_log' class='input-field' placeholder='Email' required>
+                             <input type='password' name='parola_log' class='input-field' placeholder='Introdu parola' required>
+                             <button type='submit' name='login_submit' class='submit-btn'>Intră în cont</button>
+                         </form>
 
-          		        <form id='register' class='input-group-register' method='POST' action='index.php'>
-          		            <input type='text' name='prenume' class='input-field' placeholder='Prenume' required>
-          		            <input type='text' name='nume' class='input-field' placeholder='Nume' required>
-          		            <input type='email' name='email_reg' class='input-field' placeholder='Email' required>
-          		            <input type='password' name='parola_reg' class='input-field' placeholder='Introdu parola ' required>
-          		            <input type='password' class='input-field' placeholder='Confirmă parola' required>
-          		            <input type='checkbox' class='check-box' required><span>Sunt de acord cu termenii și condițiile</span>
-                              <button type='submit' name='register_submit' class='submit-btn'>Creează cont nou</button>
-          	            </form>
-
+                         <form id='register' class='input-group-register' method='POST' action='index.php'>
+                           <input type='text' name='prenume' class='input-field' placeholder='Prenume' required>
+                           <input type='text' name='nume' class='input-field' placeholder='Nume' required>
+                           <input type='email' name='email_reg' class='input-field' placeholder='Email' required>
+                           <input type='password' name='parola_reg' class='input-field' placeholder='Introdu parola' required>
+                           <input type='password' class='input-field' placeholder='Confirmă parola' required>
+                           <button type='submit' name='register_submit' class='submit-btn'>Creează cont nou</button>
+                          </form>
                       </div>
                   </div>
 	
@@ -241,8 +237,14 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['login_submit'])) {
 					      <a href="index.html"><img src="images/logop.png"></a>
 					      <p>Pentru exploratorii de pretutindeni</p>	
                           <div class="buton">
-		                  <button class='loginbtn' onclick="document.getElementById('login-form').style.display='block'"style="width:auto;">Contul meu</button>
-					      </div>
+                              <?php if(isset($_SESSION['user_prenume'])): ?>
+                                  <a href="profil.php" style="text-decoration: none;">
+                                      <button class='loginbtn' style="width:auto; cursor:pointer;">Salut, <?= htmlspecialchars($_SESSION['user_prenume']) ?>!</button>
+                                  </a>
+                              <?php else: ?>
+                                  <button class='loginbtn' onclick="document.getElementById('login-form').style.display='block'" style="width:auto;">Contul meu</button>
+                              <?php endif; ?>
+                          </div>
 					 </div>
 					 
 					 <div class="detalii">
@@ -251,8 +253,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['login_submit'])) {
 					     <li><a href="about.html">Despre noi</a></li>
 					     <li><a href="contact.html">Contact</a></li>
 						 <li><a href="about.html">Termeni și condiții</a></li>
-					     <li><button class='loginbtn' onclick="document.getElementById('login-form').style.display='block'"style="width:auto;">Contul meu</button></li>
-				       </ul>
+						 <li><p>IP: <?php echo $_SERVER['SERVER_ADDR']; ?></p></li>
+					     </ul>
 					   </div>
 					 </div>
 			   
@@ -263,7 +265,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['login_submit'])) {
 				 <a href="https://ro.pinterest.com/alexandraisabela04/"><i class="fa fa-pinterest"></i></a>
 				 </div>
 				 <p>Made with<i class="fa fa-heart-o"></i></p>
-	 
 	 </section>
 	 
 	 <!--JavaScript pt meniu telefon-->
@@ -283,17 +284,25 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['login_submit'])) {
         var x=document.getElementById('login');
 		var y=document.getElementById('register');
 		var z=document.getElementById('btn');
+
+		var logText = document.getElementById('btn-log-text');
+        var regText = document.getElementById('btn-reg-text');
+
 		function register()
 		{
 			x.style.left='-400px';
 			y.style.left='50px';
 			z.style.left='110px';
+			logText.style.color = '#000';
+            regText.style.color = '#fff';
 		}
 		function login()
 		{
 			x.style.left='50px';
 			y.style.left='450px';
 			z.style.left='0px';
+			logText.style.color = '#fff';
+            regText.style.color = '#000';
 		}
 	</script>
 	<script>

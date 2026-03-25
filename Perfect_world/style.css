@@ -15,7 +15,7 @@ nav{
 	display: flex;
 	padding: 2% 6%;
 	justify-content: space-between;
-	align-items:center:
+	align-items:center;
 }
 nav img{
      width: 300px;
@@ -27,13 +27,13 @@ nav img{
 	text-align: right;
 }
 .nav-links ul li{
-	list-style: none; /* fara puncte */
-	display: inline-block; /* vertical */
+	list-style: none;
+	display: inline-block;
 	padding: 35px 12px;
 	position: relative;
 }
 .nav-links ul li a{
-	color: #fff;  /* alb */
+	color: #fff;
 	text-decoration: none;
 	font-size: 20px;
 }
@@ -94,12 +94,13 @@ nav ul li button
     cursor: pointer;
 }
 
-/* face pagina transparenta cand deschis log in */
 .login-page
 {
     display: none;
 	z-index: 9999999;
 	position:fixed;
+	top: 0;
+	left: 0;
 	background: rgba(255, 255, 255, 0.1);
 	backdrop-filter: blur(10px);
 	width: 100%;
@@ -109,19 +110,22 @@ nav ul li button
 .form-box
 {
     width:380px;
-	height:480px;
-	position:relative;
-	margin:2% auto;
+	height:600px;
 	background: rgb(230, 255, 230, 0.8);
 	padding:10px;
     overflow: hidden;
+	position: absolute;
+	top: 50%;
+	left: 50%;
+	transform: translate(-50%, -50%);
+	border-radius: 20px;
 }
 .button-box
 {
 	width:220px;
 	margin:35px auto;
 	position:relative;
-	box-shadow: 0 0 20px 9px #ff61241f;
+	border: 1px solid #003333;
 	border-radius: 30px;
 }
 .toggle-btn
@@ -169,6 +173,8 @@ nav ul li button
 	border-bottom: 1px solid #999;
 	outline:none;
 	background: transparent;
+	font-family: 'Playfair Display', serif;
+	font-weight: 500;
 }
 .submit-btn
 {
@@ -177,10 +183,12 @@ nav ul li button
 	cursor: pointer;
 	display: block;
 	margin: auto;
+	margin-top: 40px;
 	background: #003333;
 	border: 0;
 	outline: none;
 	border-radius: 30px;
+	color: #fff;
 }
 .check-box
 {
@@ -199,8 +207,8 @@ span
 }
 #login input
 {
-	color:white;
-	font-size:15;
+	color: #000;
+	font-size:15px;
 }
 #register
 {
@@ -208,8 +216,8 @@ span
 }
 #register input
 {
-	color:white;
-	font-size: 15;
+	color: #000;
+	font-size: 15px;
 }
 .text-box{
 	 width: 90%;
@@ -322,7 +330,7 @@ p{
 .row{
 	margin-top: 5%;
 	display: flex;
-	justify-content: space-between;
+	justify-content: center;
 }
 .oval-image1 {
   width: 250px;
@@ -399,11 +407,11 @@ p{
 	font-weight: 900;
 }
 .content-col{
-	flex-basis: 31%;
+	flex-basis: 19%;
 	background: #e6ffe6;
 	border-radius: 10px;
 	margin-bottom: 5%;
-	padding: 20px 12 px;
+	padding: 20px 12px;
 	box-sizing: border-box;
 }
 .content-col h3{
@@ -516,6 +524,9 @@ p{
 	.detalii{
 		margin-top: 40px;
 	}
+}
+.icons {
+	margin-top: -50px;
 }
 .icons .fa{
 	color: #fff;
