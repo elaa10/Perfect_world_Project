@@ -1143,3 +1143,211 @@ p{
     margin-bottom: 40px;
 	}
 }
+
+/* =========================================
+   STILURI PENTRU PAGINA: CONTUL MEU
+========================================= */
+
+.profil-header {
+	min-height: 100vh;
+	width: 100%;
+	background-image: linear-gradient(rgba(4,9,30,0.6),rgba(4,9,30,0.6)), url(images/profil.jpg);
+	background-position: center;
+	background-size: cover;
+	position: relative;
+}
+
+.profil {
+	width: 100%;
+	margin: auto;
+	background-image: url(images/lines.jpg);
+	background-position: center;
+	background-size: cover;
+	position: relative;
+}
+
+.profil .square-img {
+	width: 550px;
+	height: 800px;
+	border-radius: 50px;
+	background-image: url(images/sat.jpg);
+	background-size: cover;
+	display: block;
+	margin: 40px 50px 40px;
+	border: 3px solid #fff;
+}
+
+.profil .informatii h3 {
+	text-align: left;
+	font-style: normal;
+	font-weight: 700;
+	font-size: 40px;
+	padding: 40px 90px 20px;
+	color: #999999;
+}
+
+.profile-form {
+	padding: 0 90px;
+}
+
+.profile-form .input-field {
+	width: 100%;
+	padding: 10px 0;
+	margin: 5px 0 25px 0;
+	border: none;
+	border-bottom: 2px solid #003333;
+	background: transparent;
+	font-size: 20px;
+	color: #333;
+	outline: none;
+	font-family: 'Playfair Display', serif;
+}
+
+.profile-form label {
+	font-size: 18px;
+	color: #666;
+	font-style: italic;
+}
+
+.btn-update {
+	background: #003333; color: #fff; padding: 12px 30px; border: none; border-radius: 30px; cursor: pointer; font-size: 18px; width: 100%; font-family: 'Playfair Display', serif;
+}
+.btn-update:hover { background: #005555; transition: 0.5s; }
+
+/* Container pentru butoanele de jos (le ține pe același rând) */
+.action-buttons {
+	display: flex;
+	justify-content: space-between;
+	gap: 15px; /* Lasă un spațiu curat între ele */
+	margin-top: 20px;
+}
+
+/* Butonul lila pal pentru ștergere */
+.btn-delete {
+	background: #d8bfd8; /* O nuanță elegantă de lila pal */
+	color: #fff;
+	border: none;
+	padding: 12px 10px;
+	border-radius: 30px;
+	cursor: pointer;
+	font-size: 18px;
+	width: 100%;
+	transition: 0.5s;
+	font-family: 'Playfair Display', serif;
+}
+.btn-delete:hover {
+	background: #c8a2c8; /* Lila puțin mai pronunțat când treci cu mouse-ul */
+}
+
+/* Butonul de deconectare */
+.btn-logout {
+	background: #333;
+	color: #fff;
+	padding: 12px 10px;
+	border: none;
+	border-radius: 30px;
+	cursor: pointer;
+	font-size: 18px;
+	width: 100%;
+	font-family: 'Playfair Display', serif;
+}
+.btn-logout:hover {
+	background: #000;
+	transition: 0.5s;
+}
+
+/* --- Design pentru Wishlist --- */
+.wishlist-container {
+	width: 80%;
+	margin: 50px auto;
+	background: #f4e8fd;
+	border-radius: 20px;
+	padding: 40px;
+	box-shadow: 0 0 20px rgba(0,0,0,0.1);
+}
+.wishlist-container h2 {
+	text-align: center;
+	font-size: 40px;
+	margin-bottom: 30px;
+	color: #4a0e4e;
+}
+
+.wishlist-add-form {
+	display: flex;
+	justify-content: space-between;
+	gap: 10px;
+	margin-bottom: 40px;
+
+}
+.wishlist-add-form input {
+	flex: 1;
+	padding: 10px;
+	border-radius: 10px;
+	border: 1px solid #ccc;
+	font-family: 'Playfair Display', serif;
+	font-size: 16px;
+}
+
+.wishlist-add-form button {
+	background: #4a0e4e;
+	color: white;
+	border: none;
+	padding: 10px 30px;
+	border-radius: 10px;
+	cursor: pointer;
+	font-size: 18px;
+	font-family: 'Playfair Display', serif;
+	transition: 0.5s;
+}
+.wishlist-add-form button:hover {
+	background: #2d0830;
+}
+
+.wishlist-item {
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+	background: #fff;
+	padding: 15px 20px;
+	border-radius: 10px;
+	margin-bottom: 10px;
+	transition: 0.5s;
+
+}
+.wishlist-item p {
+	margin: 0;
+	font-size: 20px;
+	font-style: normal;
+	flex: 1;
+	padding: 0 15px;
+}
+.wishlist-item .fa-heart {
+	color: red;
+	font-size: 24px;
+	cursor: pointer;
+}
+.wishlist-item .fa-pencil {
+	color: #4a0e4e;
+	font-size: 24px;
+	cursor: pointer;
+	margin-right: 15px;
+}
+.wishlist-item .check-icon {
+	font-size: 28px;
+	cursor: pointer;
+	color: #555;
+}
+.visited {
+	opacity: 0.8;
+	filter: blur(0.3px);
+	text-decoration: none;
+}
+
+/* Adaptare pentru telefoane  */
+@media(max-width: 700px) {
+	.profil .square-img { width: 300px; height: 450px; margin-left: auto; margin-right: auto; }
+	.profil .informatii h3 { font-size: 35px; padding: 40px 30px; }
+	.profile-form { padding: 0 30px; }
+	.wishlist-add-form { flex-direction: column; }
+	.wishlist-item { flex-direction: column; text-align: center; gap: 10px; }
+}
