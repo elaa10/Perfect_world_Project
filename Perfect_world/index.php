@@ -13,37 +13,72 @@ if ($conn->connect_error) {
     die("Conexiunea a eșuat: " . $conn->connect_error);
 }
 
-// 1. Logica pentru INREGISTRARE (Register)
+// 0. Logica pentru ACTIVARE CONT (Când dai click pe linkul din email)
+if (isset($_GET['token'])) {
+    $token = $conn->real_escape_string($_GET['token']);
+    // Căutăm userul care are acest token și nu e activ încă
+    $result = $conn->query("SELECT id, prenume FROM users WHERE token='$token' AND is_active=0");
+    if ($result->num_rows > 0) {
+        $row = $result->fetch_assoc();
+        $id = $row['id'];
+        // Îl facem activ și îi ștergem token-ul (ca să nu mai poată fi folosit)
+        $conn->query("UPDATE users SET is_active=1, token=NULL WHERE id=$id");
+        echo "<script>alert('Contul tău a fost activat cu succes, " . $row['prenume'] . "! Acum te poți loga.'); window.location.href='index.php';</script>";
+    } else {
+        echo "<script>alert('Link-ul de activare este invalid sau contul a fost deja activat.'); window.location.href='index.php';</script>";
+    }
+}
+
+// 1. Logica pentru INREGISTRARE (Register) cu Email
 if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['register_submit'])) {
-    $nume = $_POST['nume'];
-    $prenume = $_POST['prenume'];
-    $email = $_POST['email_reg'];
+    $nume = $conn->real_escape_string($_POST['nume']);
+    $prenume = $conn->real_escape_string($_POST['prenume']);
+    $email = $conn->real_escape_string($_POST['email_reg']);
     $parola = password_hash($_POST['parola_reg'], PASSWORD_DEFAULT);
 
-    $sql = "INSERT INTO users (nume, prenume, email, password) VALUES ('$nume', '$prenume', '$email', '$parola')";
+    // Generăm un cod secret unic (token) format din 32 de caractere
+    $token = bin2hex(random_bytes(16));
+
+    $sql = "INSERT INTO users (nume, prenume, email, password, token, is_active) VALUES ('$nume', '$prenume', '$email', '$parola', '$token', 0)";
     if ($conn->query($sql) === TRUE) {
-            echo "<script>alert('Cont creat cu succes! Te poți loga acum.');</script>";
+        // --- TRIMITEM EMAILUL ---
+        $to = $email;
+        $subject = "Confirmare cont Perfect Planet";
+        $activation_link = "https://perfectworld.local:8443/index.php?token=" . $token;
+        $message = "Salut $prenume,\n\nTe rugam sa dai click pe urmatorul link pentru a-ti activa contul pe site-ul nostru:\n$activation_link\n\nEchipa Perfect Planet";
+        $headers = "From: admin@perfectworld.local";
+
+        // Funcția magică care strigă poștașul
+        mail($to, $subject, $message, $headers);
+
+        echo "<script>alert('Cont creat! Te rugăm să îți verifici emailul (în MailHog) pentru a activa contul.');</script>";
     } else {
-            echo "<script>alert('EROARE BAZA DE DATE:\\n" . addslashes($conn->error) . "');</script>";
+        echo "<script>alert('EROARE BAZA DE DATE:\\n" . addslashes($conn->error) . "');</script>";
     }
 }
 
 // 2. Logica pentru AUTENTIFICARE (Login)
 if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['login_submit'])) {
-    $email = $_POST['email_log'];
+    $email = $conn->real_escape_string($_POST['email_log']);
     $parola_introdusa = $_POST['parola_log'];
 
     $result = $conn->query("SELECT * FROM users WHERE email='$email'");
     if ($result->num_rows > 0) {
         $row = $result->fetch_assoc();
-        // Verificăm parola
-        if (password_verify($parola_introdusa, $row['password'])) {
-            $_SESSION['user_id'] = $row['id'];
-            $_SESSION['user_nume'] = $row['nume'];
-            $_SESSION['user_prenume'] = $row['prenume'];
-            echo "<script>alert('Te-ai logat cu succes, " . $row['prenume'] . "!');</script>";
+
+        // VERIFICARE NOUĂ: Contul este activat?
+        if ($row['is_active'] == 0) {
+            echo "<script>alert('Contul tău nu este activat! Te rugăm să dai click pe link-ul din email.');</script>";
         } else {
-            echo "<script>alert('Parola este incorectă!');</script>";
+            // Dacă e activ, verificăm parola
+            if (password_verify($parola_introdusa, $row['password'])) {
+                $_SESSION['user_id'] = $row['id'];
+                $_SESSION['user_nume'] = $row['nume'];
+                $_SESSION['user_prenume'] = $row['prenume'];
+                echo "<script>alert('Te-ai logat cu succes, " . $row['prenume'] . "!');</script>";
+            } else {
+                echo "<script>alert('Parola este incorectă!');</script>";
+            }
         }
     } else {
         echo "<script>alert('Nu am găsit niciun cont cu acest email!');</script>";
@@ -85,7 +120,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['login_submit'])) {
 					              <li><a href="jamaica.html">Jamaica</a></li>
 					              <li><a href="dominicana.html">Dominica</a></li>
 					              <li><a href="albania.html">Albania</a></li>
-					              <li><a href="alaska.html">Alaska, SUA</a></li>
+					              <li><a href="alaska.php">Alaska, SUA</a></li>
 					              <li><a href="marsilia.html">Marsilia,<br> Franța</a></li>
 					              <li><a href="mexico.html">New Mexico, SUA</a></li>
 							 </ul>
@@ -94,8 +129,11 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['login_submit'])) {
 					<li><a href="about.html">Despre noi</a></li>
 					<li><a href="contact.html">Contact</a></li>
 					<li>
-                        <?php if(isset($_SESSION['user_nume'])): ?>
-                            <button class='loginbtn' style="width:auto; cursor:default; background:#ff9800;">Salut, <?= htmlspecialchars($_SESSION['user_nume']) ?>!</button>
+                        <?php if(isset($_SESSION['user_prenume'])): ?>
+                            <button class='loginbtn' style="width:auto; cursor:default;">Salut, <?= htmlspecialchars($_SESSION['user_prenume']) ?>!</button>
+                            <a href="logout.php" style="text-decoration: none;">
+                                <button class='loginbtn' style="width:auto; background:#dc3545; margin-left: 10px;">Ieșire</button>
+                            </a>
                         <?php else: ?>
                             <button class='loginbtn' onclick="document.getElementById('login-form').style.display='block'" style="width:auto;">Contul meu</button>
                         <?php endif; ?>
@@ -182,7 +220,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['login_submit'])) {
 				<h3>Oameni</h3>
 				<ul>
 				    <li><a href="albania.html">Albania</a></li>
-					<li><a href="alaska.html">Alaska, SUA</a></li>
+					<li><a href="alaska.php">Alaska, SUA</a></li>
 				</ul>
 				</div>
 				<div class="content-col">

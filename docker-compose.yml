@@ -61,7 +61,7 @@ services:
     ports:
       - "8081:80"
     environment:
-      PMA_HOSTS: db_master, db_slave   # NOU: Permite selectarea serverului dintr-o listă
+      PMA_HOSTS: db_master, db_slave   
     depends_on:
       - db_master
       - db_slave
@@ -72,7 +72,13 @@ services:
     image: redis:alpine
     networks:
       - nsa_net
-
+  # Serverul de Mail (MailHog)
+  mailhog:
+    image: mailhog/mailhog
+    ports:
+      - "8025:8025"   
+    networks:
+      - nsa_net
 networks:
   nsa_net:
     driver: bridge
