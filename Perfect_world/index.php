@@ -22,9 +22,9 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['register_submit'])) {
 
     $sql = "INSERT INTO users (nume, prenume, email, password) VALUES ('$nume', '$prenume', '$email', '$parola')";
     if ($conn->query($sql) === TRUE) {
-        echo "<script>alert('Cont creat cu succes! Te poți loga acum.');</script>";
+            echo "<script>alert('Cont creat cu succes! Te poți loga acum.');</script>";
     } else {
-        echo "<script>alert('Eroare: Email-ul există deja sau datele sunt incorecte!');</script>";
+            echo "<script>alert('EROARE BAZA DE DATE:\\n" . addslashes($conn->error) . "');</script>";
     }
 }
 
