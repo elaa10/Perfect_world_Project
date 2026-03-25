@@ -51,9 +51,9 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['register_submit'])) {
         // Funcția magică care strigă poștașul
         mail($to, $subject, $message, $headers);
 
-        echo "<script>alert('Cont creat! Te rugăm să îți verifici emailul (în MailHog) pentru a activa contul.');</script>";
+        echo "<script>alert('Cont creat! Te rugăm să îți verifici emailul (în MailHog) pentru a activa contul.'); window.location.href='index.php';</script>";
     } else {
-        echo "<script>alert('EROARE BAZA DE DATE:\\n" . addslashes($conn->error) . "');</script>";
+        echo "<script>alert('EROARE BAZA DE DATE:\\n" . addslashes($conn->error) . "'); window.location.href='index.php';</script>";
     }
 }
 
@@ -75,9 +75,9 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['login_submit'])) {
                 $_SESSION['user_id'] = $row['id'];
                 $_SESSION['user_nume'] = $row['nume'];
                 $_SESSION['user_prenume'] = $row['prenume'];
-                echo "<script>alert('Te-ai logat cu succes, " . $row['prenume'] . "!');</script>";
+                echo "<script>alert('Te-ai logat cu succes, " . $row['prenume'] . "!'); window.location.href='index.php';</script>";
             } else {
-                echo "<script>alert('Parola este incorectă!');</script>";
+                echo "<script>alert('Parola este incorectă!'); window.location.href='index.php';</script>";
             }
         }
     } else {
