@@ -90,8 +90,13 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['login_submit'])) {
 					</li>
 					<li><a href="about.html">Despre noi</a></li>
 					<li><a href="contact.html">Contact</a></li>
-					<li><button class='loginbtn' onclick="document.getElementById('login-form').style.display='block'"style="width:auto;">Contul meu</button></li>
-
+					<li>
+                        <?php if(isset($_SESSION['user_nume'])): ?>
+                            <button class='loginbtn' style="width:auto; cursor:default; background:#ff9800;">Salut, <?= htmlspecialchars($_SESSION['user_nume']) ?>!</button>
+                        <?php else: ?>
+                            <button class='loginbtn' onclick="document.getElementById('login-form').style.display='block'" style="width:auto;">Contul meu</button>
+                        <?php endif; ?>
+                    </li>
 				</ul>
 			 </div>
 			 <!-- buton pentru deschis meniul pe telefon -javascirt-->
