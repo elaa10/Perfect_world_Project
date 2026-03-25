@@ -108,10 +108,27 @@ $user_data = $result->fetch_assoc();
              <div class="nav-links" id="navLinks">
              <i class="fa fa-times" onclick="hideMenu()"></i>
                 <ul>
-                    <li><a href="index.php">Acasă</a></li>
-                    <li><a href="about.html">Despre noi</a></li>
-                    <li><a href="contact.html">Contact</a></li>
-                    <li><button class='loginbtn' style="width:auto; cursor:default;">Salut, <?= htmlspecialchars($_SESSION['user_prenume']) ?>!</button></li>
+                    <li><a href="">Destinații</a>
+                         <div class="sub-menu">
+                             <ul>
+                                  <li><a href="umbria.php">Umbria, Italia</a></li>
+                                  <li><a href="fukuoka.php">Fukuoka,Japonia</a></li>
+                                  <li><a href="australia.php">Australia de<br> Vest</a></li>
+                                  <li><a href="zambia.php">Zambia</a></li>
+                                  <li><a href="jamaica.php">Jamaica</a></li>
+                                  <li><a href="dominicana.php">Dominica</a></li>
+                                  <li><a href="albania.php">Albania</a></li>
+                                  <li><a href="alaska.php">Alaska, SUA</a></li>
+                                  <li><a href="marsilia.php">Marsilia,<br> Franța</a></li>
+                                  <li><a href="mexico.php">New Mexico, SUA</a></li>
+                             </ul>
+                         </div>
+                    </li>
+                    <li><a href="about.php">Despre noi</a></li>
+                    <li><a href="contact.php">Contact</a></li>
+                    <li>
+                        <button class='loginbtn' style="width:auto; cursor:default;">Salut, <?= htmlspecialchars($_SESSION['user_prenume']) ?>!</button>
+                    </li>
                 </ul>
              </div>
              <i class="fa fa-bars" onclick="showMenu()"></i>

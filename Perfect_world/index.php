@@ -105,7 +105,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['login_submit'])) {
 <body>
      <section class="header">
 	      <nav>
-		     <a href="index.html"><img src="images/logop.png"></a>
+		     <a href="index.php"><img src="images/logop.png"></a>
 			 <div class="nav-links" id="navLinks">
 			 <!-- buton pentru inchis meniul pe telefon -javascirt-->
 			 <i class="fa fa-times" onclick="hideMenu()"></i>
@@ -113,21 +113,21 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['login_submit'])) {
 				    <li><a href="">Destinații</a>
 					     <div class="sub-menu">
 						     <ul>
-							      <li><a href="umbria.html">Umbria, Italia</a></li>
-					              <li><a href="fukuoka.html">Fukuoka,Japonia</a></li>
-								  <li><a href="australia.html">Australia de<br> Vest</a></li>
-					              <li><a href="zambia.html">Zambia</a></li>
-					              <li><a href="jamaica.html">Jamaica</a></li>
-					              <li><a href="dominicana.html">Dominica</a></li>
-					              <li><a href="albania.html">Albania</a></li>
+							      <li><a href="umbria.php">Umbria, Italia</a></li>
+					              <li><a href="fukuoka.php">Fukuoka,Japonia</a></li>
+								  <li><a href="australia.php">Australia de<br> Vest</a></li>
+					              <li><a href="zambia.php">Zambia</a></li>
+					              <li><a href="jamaica.php">Jamaica</a></li>
+					              <li><a href="dominicana.php">Dominica</a></li>
+					              <li><a href="albania.php">Albania</a></li>
 					              <li><a href="alaska.php">Alaska, SUA</a></li>
-					              <li><a href="marsilia.html">Marsilia,<br> Franța</a></li>
-					              <li><a href="mexico.html">New Mexico, SUA</a></li>
+					              <li><a href="marsilia.php">Marsilia,<br> Franța</a></li>
+					              <li><a href="mexico.php">New Mexico, SUA</a></li>
 							 </ul>
 						 </div>
 					</li>
-					<li><a href="about.html">Despre noi</a></li>
-					<li><a href="contact.html">Contact</a></li>
+					<li><a href="about.php">Despre noi</a></li>
+					<li><a href="contact.php">Contact</a></li>
                     <li>
                         <?php if(isset($_SESSION['user_prenume'])): ?>
                             <a href="profil.php" style="text-decoration: none;">
@@ -191,31 +191,31 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['login_submit'])) {
 				<div class="oval-image1"></div>
 				<h3>Gastronomie</h3>
 				<ul>
-				    <li><a href="umbria.html">Umbria, Italia</a></li>
-					<li><a href="fukuoka.html">Fukuoka,Japonia</a></li>
+				    <li><a href="umbria.php">Umbria, Italia</a></li>
+					<li><a href="fukuoka.php">Fukuoka,Japonia</a></li>
 				</ul>
 				</div>
 				<div class="content-col">
 				<div class="oval-image2"></div>
 				<h3>Aventură</h3>
 				<ul>
-				    <li><a href="australia.html">Australia de Vest</a></li>
-					<li><a href="zambia.html">Zambia</a></li>
+				    <li><a href="australia.php">Australia de Vest</a></li>
+					<li><a href="zambia.php">Zambia</a></li>
 				</ul>
 				</div>
 				<div class="content-col">
 				<div class="oval-image3"></div>
 				<h3>Natură</h3>
 				<ul>
-				    <li><a href="jamaica.html">Jamaica</a></li>
-					<li><a href="dominicana.html">Dominica</a></li>
+				    <li><a href="jamaica.php">Jamaica</a></li>
+					<li><a href="dominicana.php">Dominica</a></li>
 				</ul>
 				</div>
 				<div class="content-col">
 				<div class="oval-image4"></div>
 				<h3>Oameni</h3>
 				<ul>
-				    <li><a href="albania.html">Albania</a></li>
+				    <li><a href="albania.php">Albania</a></li>
 					<li><a href="alaska.php">Alaska, SUA</a></li>
 				</ul>
 				</div>
@@ -223,8 +223,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['login_submit'])) {
 				<div class="oval-image5"></div>
 				<h3>Cultură</h3>
 				<ul>
-				    <li><a href="marsilia.html">Marsilia, Franța</a></li>
-					<li><a href="mexico.html">New Mexico, USA</a></li>
+				    <li><a href="marsilia.php">Marsilia, Franța</a></li>
+					<li><a href="mexico.php">New Mexico, USA</a></li>
 				</ul>
 				</div>
 		 </div>
@@ -234,7 +234,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['login_submit'])) {
 	 <section class="footer">
 	    	   <div class="rowf">
 			         <div class="logo">
-					      <a href="index.html"><img src="images/logop.png"></a>
+					      <a href="index.php"><img src="images/logop.png"></a>
 					      <p>Pentru exploratorii de pretutindeni</p>	
                           <div class="buton">
                               <?php if(isset($_SESSION['user_prenume'])): ?>
@@ -250,9 +250,9 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['login_submit'])) {
 					 <div class="detalii">
 					 <div class="lista">
 					  <ul>
-					     <li><a href="about.html">Despre noi</a></li>
-					     <li><a href="contact.html">Contact</a></li>
-						 <li><a href="about.html">Termeni și condiții</a></li>
+					     <li><a href="about.php">Despre noi</a></li>
+					     <li><a href="contact.php">Contact</a></li>
+						 <li><a href="about.php">Termeni și condiții</a></li>
 						 <li><p>IP: <?php echo $_SERVER['SERVER_ADDR']; ?></p></li>
 					     </ul>
 					   </div>
