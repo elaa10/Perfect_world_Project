@@ -2,7 +2,9 @@
 FROM php:8.2-apache
 
 # Instalăm extensiile necesare pentru ca PHP să poată vorbi cu baza de date
-RUN docker-php-ext-install mysqli pdo pdo_mysql
+RUN docker-php-ext-install mysqli pdo pdo_mysql \
+    && pecl install redis \
+    && docker-php-ext-enable redis
 
 # Copiem toate fișierele site-ului tău din folder în interiorul containerului
 COPY . /var/www/html/

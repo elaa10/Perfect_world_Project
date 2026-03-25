@@ -1,10 +1,12 @@
 <?php
-session_start(); // Începem sesiunea pentru a ține minte dacă ești logată
+ini_set('session.save_handler', 'redis');
+ini_set('session.save_path', 'tcp://redis:6379');
+session_start();
 
-$host = 'db';
+$host = 'db_master';
 $db   = 'perfect_world_db';
 $user = 'alexandra';
-$pass = 'parola_test';
+$pass = '1005';
 
 $conn = new mysqli($host, $user, $pass, $db);
 if ($conn->connect_error) {
@@ -89,7 +91,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['login_submit'])) {
 					<li><a href="about.html">Despre noi</a></li>
 					<li><a href="contact.html">Contact</a></li>
 					<li><button class='loginbtn' onclick="document.getElementById('login-form').style.display='block'"style="width:auto;">Contul meu</button></li>
-				
+
 				</ul>
 			 </div>
 			 <!-- buton pentru deschis meniul pe telefon -javascirt-->
@@ -128,7 +130,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['login_submit'])) {
 	
 	 <div class="text-box">
 	      <h1>CĂLĂTORII ÎN JURUL LUMII</h1>
-		  <p>Cele mai frumoase locuri de vizitat în 2023</p>
+		  <p>Cele mai frumoase locuri de vizitat din toată lumea</p>
 	 </div>
 	 </section>
 	 

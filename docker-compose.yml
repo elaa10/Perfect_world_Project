@@ -1,7 +1,7 @@
 version: '3.8'
 
 services:
-  # Cerința: Run 2 web servers as replicas
+  # Run 2 web servers as replicas
   web_app:
     build:
       context: ./Perfect_world
@@ -11,21 +11,25 @@ services:
     networks:
       - nsa_net
 
-  # Cerința: Install nginx as reverse proxy on port 8080
+  # Install nginx as reverse proxy on port 8080
   nginx:
     image: nginx:latest
     ports:
-      - "8080:8080"
+      - "8080:80"
+      - "8443:443"
     volumes:
       - ./nginx.conf:/etc/nginx/nginx.conf:ro
+      - ./ssl:/etc/nginx/ssl:ro
+
     depends_on:
       - web_app
     networks:
       - nsa_net
 
-  # Cerința: One database server
-  db:
+# Baza de date MASTER (Cea principală)
+  db_master:
     image: mariadb:10.6
+    command: --server-id=1 --log-bin=mysql-bin
     environment:
       MYSQL_ROOT_PASSWORD: 100504
       MYSQL_DATABASE: perfect_world_db
@@ -34,15 +38,35 @@ services:
     networks:
       - nsa_net
 
-  # Cerința: One phpmyadmin container
+  # Baza de date SLAVE (Cea care copiază)
+  db_slave:
+    image: mariadb:10.6
+    command: --server-id=2 --log-bin=mysql-bin
+    environment:
+      MYSQL_ROOT_PASSWORD: 100504
+      MYSQL_DATABASE: perfect_world_db   
+      MYSQL_USER: alexandra              
+      MYSQL_PASSWORD: 1005
+    depends_on:
+      - db_master
+    networks:
+      - nsa_net
+
+  # Interfața phpMyAdmin
   phpmyadmin:
     image: phpmyadmin/phpmyadmin
     ports:
       - "8081:80"
     environment:
-      PMA_HOST: db
+      PMA_HOSTS: db_master, db_slave   # NOU: Permite selectarea serverului dintr-o listă
     depends_on:
-      - db
+      - db_master
+      - db_slave
+    networks:
+      - nsa_net
+
+  redis:
+    image: redis:alpine
     networks:
       - nsa_net
 
