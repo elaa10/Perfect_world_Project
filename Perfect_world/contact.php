@@ -19,6 +19,9 @@ session_start();
 
 <body>
 <section class="contact-header">
+    <video autoplay loop muted plays-inline class="back-video">
+    		      <source src="images/contact.mp4" type="video/mp4">
+    		  </video>
 	<nav>
 		<a href="index.php"><img src="images/logop.png"></a>
 		<div class="nav-links" id="navLinks">

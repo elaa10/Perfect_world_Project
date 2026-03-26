@@ -19,6 +19,9 @@ session_start();
 
 <body>
 <section class="about-header">
+    <video autoplay loop muted plays-inline class="back-video">
+    		      <source src="images/about.mp4" type="video/mp4">
+    		  </video>
 	<nav>
 		<a href="index.php"><img src="images/logop.png"></a>
 		<div class="nav-links" id="navLinks">
